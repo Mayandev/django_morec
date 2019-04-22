@@ -5,7 +5,7 @@ class MovieImage {
   String large;
   String medium;
 
-  MovieImage(this.small, this.medium, this.large);
+  MovieImage({this.small, this.medium, this.large});
 
   MovieImage.fromJson(Map data) {   
     small = data['small'];

@@ -14,7 +14,7 @@ class MovieActor {
     id = data['id'];
     alt = data['alt'];
     if (data['avatars'] == null) {
-      avatars = new MovieImage(avatarPlaceholder, avatarPlaceholder, avatarPlaceholder);
+      avatars = new MovieImage(small: avatarPlaceholder, medium: avatarPlaceholder, large: avatarPlaceholder);
     } else {
       avatars = MovieImage.fromJson(data['avatars']);
     }

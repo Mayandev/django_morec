@@ -1,11 +1,16 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:movie_recommend/public.dart';
 
 import 'package:movie_recommend/home/home_scene.dart';
 import 'package:movie_recommend/my/my_scene.dart';
+
+import 'app_state.dart';
+import 'package:movie_recommend/my/login_scene.dart';
 
 class RootScene extends StatefulWidget {
   final Widget child;
@@ -17,11 +22,10 @@ class RootScene extends StatefulWidget {
 
 class _RootSceneState extends State<RootScene> {
   int _tabIndex = 0;
-  bool isLoaded = false;
 
 
   // 定义 tab icon
-List<Image> _tabImages = [
+  List<Image> _tabImages = [
     Image.asset('images/tab_home.png'),
     Image.asset('images/tab_my.png'),
   ];
@@ -33,9 +37,6 @@ List<Image> _tabImages = [
   @override
   void initState() { 
     super.initState();
-    
-    setupApp();
-
 
     eventBus.on(EventUserLogin, (arg) {
       setState(() {});
@@ -61,50 +62,56 @@ List<Image> _tabImages = [
     super.dispose();
   }
 
-  setupApp() async {
-    preferences =await SharedPreferences.getInstance();
-    setState(() {
-      isLoaded = true;
-    });
-  }
   
   
   
   @override
   Widget build(BuildContext context) {
-    if (!isLoaded) {
-      return RefreshProgressIndicator();
-    }
 
-    return Scaffold(
-      body: IndexedStack(
-        children: <Widget>[
-          HomeScene(),
-          MyScene()
-        ],
-        index: _tabIndex,
-      ),
-      bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: Colors.white,
-        activeColor: AppColor.primary,
-        border: Border(top: BorderSide.none),
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: getTabIcon(0),
-            title: Text('首页'),
+    return StoreConnector<AppState, Store<AppState>>(
+      converter: (store) => store,
+      builder: (context, store) {
+        final authed = store.state.authed;
+        return Scaffold(
+          body: authed ? IndexedStack(
+            children: <Widget>[
+              HomeScene(),
+              MyScene()
+            ],
+            index: _tabIndex,
+          ) : HomeScene(),
+          bottomNavigationBar: CupertinoTabBar(
+
+            backgroundColor: Colors.transparent,
+            activeColor: AppColor.primary,
+            border: Border(top: BorderSide.none),
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: getTabIcon(0),
+                title: Text('首页'),
+              ),
+              BottomNavigationBarItem(
+                icon: getTabIcon(1),
+                title: Text("我的"),
+              )
+            ],
+            currentIndex: _tabIndex,
+            onTap: (index) {
+
+              if (!authed && index == 1) {
+                Toast.show('请先登录');
+                // 进入登陆页面
+                AppNavigator.push(context, LoginPage());
+              } else {
+                setState(() {
+                  _tabIndex = index;
+                });
+              }
+
+            },
           ),
-          BottomNavigationBarItem(
-            icon: getTabIcon(1),
-            title: Text("我的"),
-          )
-        ],
-        currentIndex: _tabIndex,
-        onTap: (index) {
-          setState(() {
-            _tabIndex = index;
-          });
-        },
-      ),
+        );
+      },
     );
   }
   Image getTabIcon(int index) {

@@ -17,7 +17,7 @@ class MovieItem {
   List<MovieActor> directors;
   
 
-  MovieItem(
+  MovieItem({
       this.genres,
       this.title,
       this.year,
@@ -28,7 +28,7 @@ class MovieItem {
       this.collectCount,
       this.casts,
       this.directors,
-  );
+  });
 
   MovieItem.fromJson(Map data) {
     id = data['id'];

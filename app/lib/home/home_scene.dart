@@ -28,7 +28,7 @@ class _HomeSceneState extends State<HomeScene> {
            brightness: Brightness.light,
            title: Text('首页'),
            backgroundColor: AppColor.white,
-          //  app bar 阴影
+           //  app bar 阴影
            elevation: 0,
            actions: <Widget>[
              IconButton(

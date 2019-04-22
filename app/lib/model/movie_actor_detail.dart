@@ -31,7 +31,7 @@ class MovieActorDetail {
     gender = data['gender'];
     professions = data['professions']?.cast<String>()?.toList();
     if (data['avatars'] == null) {
-      avatars = new MovieImage(avatarPlaceholder, avatarPlaceholder, avatarPlaceholder);
+      avatars = new MovieImage(small: avatarPlaceholder, medium: avatarPlaceholder, large: avatarPlaceholder);
     } else {
       avatars = MovieImage.fromJson(data['avatars']);
     }

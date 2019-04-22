@@ -12,6 +12,8 @@ export 'package:movie_recommend/app/request.dart';
 export 'package:movie_recommend/app/app_navigator.dart';
 export 'package:movie_recommend/app/api_client.dart';
 export 'package:movie_recommend/app/rating_view.dart';
+export 'package:movie_recommend/app/morec_api.dart';
+export 'package:movie_recommend/app/app_state.dart';
 
 // util
 export 'package:movie_recommend/util/event_bus.dart';
@@ -21,6 +23,7 @@ export 'package:movie_recommend/util/tag_util.dart';
 export 'package:movie_recommend/util/search_delegate.dart';
 export 'package:movie_recommend/util/movie_data_util.dart';
 export 'package:movie_recommend/util/utility.dart';
+export 'package:movie_recommend/util/shared_pref_util.dart';
 
 
 // model

@@ -37,6 +37,11 @@ dependencies:
   chewie: ^0.9.6
   video_player: ^0.10.0+2
   image_picker_saver: ^0.1.0
+  redux: ^3.0.0
+  flutter_redux: ^0.5.2
+  redux_persist: ^0.8.0
+  redux_persist_flutter: ^0.8.0
+  
 
 dev_dependencies:
   flutter_test:

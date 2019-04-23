@@ -31,6 +31,7 @@ class _MovieDetailViewState extends State<MovieDetailView> {
   ScrollController scrollController = ScrollController();
   Color pageColor = AppColor.white;
   bool isSummaryUnfold = false;
+  bool isFavor = false;
 
   @override
   void initState() {
@@ -110,11 +111,24 @@ class _MovieDetailViewState extends State<MovieDetailView> {
   Widget buildNavigationBar() {
     return Stack(
       children: <Widget>[
-        Container(
-          width: 44,
-          height: Screen.navigationBarHeight,
-          padding: EdgeInsets.fromLTRB(5, Screen.topSafeHeight, 0, 0),
-          child: GestureDetector(onTap: back, child: Image.asset('images/icon_arrow_back_white.png')),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              width: 50,
+              height: Screen.navigationBarHeight,
+              padding: EdgeInsets.fromLTRB(5, Screen.topSafeHeight, 0, 0),
+              child: GestureDetector(onTap: back, child: Image.asset('images/icon_arrow_back_white.png')),
+            ),
+            Container(
+              width: 50,
+              height: Screen.navigationBarHeight,
+              padding: EdgeInsets.fromLTRB(5, Screen.topSafeHeight, 0, 0),
+              child: GestureDetector(
+                onTap: isFavor ? cancelFavor : favorMovie, 
+                child: isFavor ? Icon(Icons.favorite,color: AppColor.white,) : Icon(Icons.favorite_border,color: AppColor.white,),),
+            ),
+          ],
         ),
         Opacity(
           opacity: navAlpha,
@@ -136,7 +150,12 @@ class _MovieDetailViewState extends State<MovieDetailView> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Container(width: 44),
+                Container(width: 44,
+                child: GestureDetector(
+                  onTap: isFavor ? cancelFavor : favorMovie,
+                  child: isFavor ? Icon(Icons.favorite,color: AppColor.white,) : Icon(Icons.favorite_border,color: AppColor.white,)
+                  ),
+                )
               ],
             ),
           ),
@@ -150,6 +169,26 @@ class _MovieDetailViewState extends State<MovieDetailView> {
     Navigator.pop(context);
   }
 
+  // 收藏电影
+  favorMovie() async{
+    MorecApi api = new MorecApi();
+    var data = await api.favorMovie(movieDetail);
+    if (data != null) {
+      setState(() {
+        isFavor = true;
+      });
+    }
+  }
+
+  // 取消收藏
+  cancelFavor() async{
+    MorecApi api = new MorecApi();
+    api.cancelFavorMovie(movieDetail.id);
+    setState(() {
+        isFavor = false;
+    });
+  }
+
   // 展开 or 收起
   changeSummaryMaxLines() {
     setState(() {
@@ -159,17 +198,22 @@ class _MovieDetailViewState extends State<MovieDetailView> {
 
   Future<void> fetchData() async {
     ApiClient client = new ApiClient();
+    MorecApi api = new MorecApi();
     MovieDetail data =
         MovieDetail.fromJson(await client.getMovieDetail(this.widget.id));
     PaletteGenerator paletteGenerator = await PaletteGenerator.fromImageProvider(
       CachedNetworkImageProvider(data.images.small),
     );
+    var isFavorData = await api.isMovieFavor(this.widget.id);
     setState(() {
       movieDetail = data;
       if (paletteGenerator.darkVibrantColor != null) {
         pageColor = paletteGenerator.darkVibrantColor.color;
       } else {
         pageColor = Color(0xff35374c);
+      }
+      if (isFavorData != null) {
+        isFavor = true;
       }
       // pageColor =paletteGenerator.dominantColor?.color;
     });

@@ -4,28 +4,25 @@ import 'package:movie_recommend/public.dart';
 
 import 'cover_image_view.dart';
 
+class FavorActorView extends StatelessWidget {
+  final List<MovieActor> actors;
 
-class FavorMovieView extends StatelessWidget {
-  final List<MovieItem> movies;
-
-  FavorMovieView(this.movies);
+  FavorActorView(this.actors);
 
   @override
   Widget build(BuildContext context) {
-
-
     return Container(
       color: Colors.white,
       child: Scrollbar(
         child: GridView.builder(
           addAutomaticKeepAlives: true,
-          itemCount: movies.length,
+          itemCount: actors.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 3/4,
           ), 
           itemBuilder: (BuildContext context, int index) {
-            return FavorMovieCoverView(movies[index]);
+            return FavorActorCoverView(actors[index]);
           },
           
         ),
@@ -34,28 +31,28 @@ class FavorMovieView extends StatelessWidget {
   }
 }
 
-class FavorMovieCoverView extends StatelessWidget {
-  final MovieItem movie;
+class FavorActorCoverView extends StatelessWidget {
+  final MovieActor actor;
 
-  FavorMovieCoverView(this.movie);
+  FavorActorCoverView(this.actor);
 
 
   @override
   Widget build(BuildContext context) {
     // 单个电影的宽度
-    // 一行放置 3 个 电影
-    var width = Screen.width/2;
+    // 一行放置 2 个 演员头像
+    var width = Screen.width / 2;
 
     return GestureDetector(
       onTap: () {
-        AppNavigator.pushMovieDetail(context, movie);
+        AppNavigator.pushActorDetail(context, actor);
       },
       child: Container(
         width: width,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: <Widget>[
-            CoverImageView(movie.images.small, width: width, height: width / 0.75,),
+            CoverImageView(actor.avatars.small, width: width, height: width / 0.75,),
             Opacity(
               opacity: 0.8,
               child: Container(
@@ -66,11 +63,18 @@ class FavorMovieCoverView extends StatelessWidget {
                 width: width,
                 child: Center(
                   child: Text(
-                    movie.title, style: TextStyle(color: AppColor.white, fontSize: 16,), 
+                    actor.name, style: TextStyle(color: AppColor.white, fontSize: 16,), 
                     overflow: TextOverflow.ellipsis,),
                 ),
               ),
             )
+            // SizedBox(height: 5,),
+            // Text(
+            //   actor.name,
+            //   overflow: TextOverflow.ellipsis,
+            //   style: TextStyle(fontSize: 14, color: Color(0xff5b5b5b)),
+            //   maxLines: 1,
+            // ),
           ],
         ),
       ),

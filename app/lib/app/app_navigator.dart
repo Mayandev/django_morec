@@ -6,6 +6,7 @@ import 'package:movie_recommend/public.dart';
 import 'package:movie_recommend/movie/movie_list_view.dart';
 import 'package:movie_recommend/movie/movie_top_list_view.dart';
 import 'package:movie_recommend/movie/movie_detail/movie_detail_view.dart';
+import 'package:movie_recommend/movie/actor_detail/actor_detail_view.dart';
 
 class AppNavigator {
   static push(BuildContext context, Widget scene) {
@@ -20,6 +21,11 @@ class AppNavigator {
   // 进入电影详情
   static pushMovieDetail(BuildContext context, MovieItem movie) {
     AppNavigator.push(context, MovieDetailView(id: movie.id,));
+  }
+
+  // 进入演员详情
+  static pushActorDetail(BuildContext context, MovieActor actor) {
+    AppNavigator.push(context, ActorDetailView(id: actor.id,));
   }
 
   // 进入电影列表页面

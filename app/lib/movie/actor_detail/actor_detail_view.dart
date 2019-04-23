@@ -30,6 +30,7 @@ class _ActorDetailViewState extends State<ActorDetailView> {
   ScrollController scrollController = ScrollController();
   Color pageColor = AppColor.white;
   bool isSummaryUnfold = false;
+  bool isFavor = false;
 
   @override
   void initState() {
@@ -112,11 +113,24 @@ class _ActorDetailViewState extends State<ActorDetailView> {
   Widget buildNavigationBar() {
     return Stack(
       children: <Widget>[
-        Container(
-          width: 44,
-          height: Screen.navigationBarHeight,
-          padding: EdgeInsets.fromLTRB(5, Screen.topSafeHeight, 0, 0),
-          child: GestureDetector(onTap: back, child: Image.asset('images/icon_arrow_back_white.png')),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              width: 50,
+              height: Screen.navigationBarHeight,
+              padding: EdgeInsets.fromLTRB(5, Screen.topSafeHeight, 0, 0),
+              child: GestureDetector(onTap: back, child: Image.asset('images/icon_arrow_back_white.png')),
+            ),
+            Container(
+              width: 50,
+              height: Screen.navigationBarHeight,
+              padding: EdgeInsets.fromLTRB(5, Screen.topSafeHeight, 0, 0),
+              child: GestureDetector(
+                onTap: isFavor ? cancelFavor : favorActor, 
+                child: isFavor ? Icon(Icons.favorite,color: AppColor.white,) : Icon(Icons.favorite_border,color: AppColor.white,),),
+            ),
+          ],
         ),
         Opacity(
           opacity: navAlpha,
@@ -138,7 +152,12 @@ class _ActorDetailViewState extends State<ActorDetailView> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Container(width: 44),
+                Container(width: 44,
+                child: GestureDetector(
+                  onTap: isFavor ? cancelFavor : favorActor,
+                  child: isFavor ? Icon(Icons.favorite,color: AppColor.white,) : Icon(Icons.favorite_border,color: AppColor.white,)
+                  ),
+                )
               ],
             ),
           ),
@@ -152,6 +171,27 @@ class _ActorDetailViewState extends State<ActorDetailView> {
     Navigator.pop(context);
   }
 
+  // 收藏演员
+  favorActor() async{
+    MorecApi api = new MorecApi();
+    var data = await api.favorActor(actorDetail);
+    if (data != null) {
+      setState(() {
+        isFavor = true;
+      });
+    }
+  }
+
+  // 取消收藏
+  cancelFavor() async{
+    MorecApi api = new MorecApi();
+    api.cancelFavorActor(actorDetail.id);
+    setState(() {
+        isFavor = false;
+    });
+  }
+
+
   // 展开 or 收起
   changeSummaryMaxLines() {
     setState(() {
@@ -161,17 +201,22 @@ class _ActorDetailViewState extends State<ActorDetailView> {
 
   Future<void> fetchData() async {
     ApiClient client = new ApiClient();
+    MorecApi api = new MorecApi();
     MovieActorDetail data =
         MovieActorDetail.fromJson(await client.getActorDetail(this.widget.id));
     PaletteGenerator paletteGenerator = await PaletteGenerator.fromImageProvider(
       CachedNetworkImageProvider(data.avatars.small),
     );
+    var isFavorData = await api.isActorFavor(this.widget.id);
     setState(() {
       actorDetail = data;
       if (paletteGenerator.darkMutedColor != null) {
         pageColor = paletteGenerator.darkMutedColor.color;
       } else {
         pageColor = Color(0xff35374c);
+      }
+      if (isFavorData != null ) {
+        isFavor = true;
       }
       // pageColor =paletteGenerator.dominantColor?.color;
     });

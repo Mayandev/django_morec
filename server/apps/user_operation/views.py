@@ -13,7 +13,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
 
 
-class UserFavorMovieViewset(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.DestroyModelMixin):
+class UserFavorMovieViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.DestroyModelMixin):
     """
     用户收藏
     """
@@ -37,7 +37,8 @@ class UserFavorMovieViewset(viewsets.GenericViewSet, mixins.ListModelMixin, mixi
         # 只能查看当前登录用户的收藏，不会获取所有用户的收藏
         return UserFavorMovie.objects.filter(user=self.request.user)
 
-class UserFavorActorViewset(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.DestroyModelMixin):
+
+class UserFavorActorViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,  mixins.ListModelMixin, mixins.CreateModelMixin, mixins.DestroyModelMixin):
     """
     用户收藏
     """

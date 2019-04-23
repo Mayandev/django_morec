@@ -38,7 +38,7 @@ class UserFavorMovieSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        # validate实现唯一联合，一个商品只能收藏一次
+        # validate实现唯一联合，一个电影只能收藏一次
         validators = [
             UniqueTogetherValidator(
                 queryset=UserFavorMovie.objects.all(),
@@ -58,7 +58,7 @@ class UserFavorActorSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        # validate实现唯一联合，一个商品只能收藏一次
+        # validate实现唯一联合，一个演员只能收藏一次
         validators = [
             UniqueTogetherValidator(
                 queryset=UserFavorActor.objects.all(),
@@ -67,5 +67,5 @@ class UserFavorActorSerializer(serializers.ModelSerializer):
                 message="已经收藏此演员"
             )
         ]
-        model = UserFavorMovie
+        model = UserFavorActor
         fields = ("user", "actorId", 'name', 'avatar')

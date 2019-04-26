@@ -6,39 +6,36 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:movie_recommend/public.dart';
 
-import 'register_scene.dart';
-
 
 // app登陆页面
-class LoginPage extends StatefulWidget {
+class RegisterScene extends StatefulWidget {
   @override
-  _LoginPageState createState() => new _LoginPageState();
+  _RegisterSceneState createState() => new _RegisterSceneState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterSceneState extends State<RegisterScene> {
 
-  _LoginData _data = new _LoginData();
+  _RegisterData _data = new _RegisterData();
   final _formKey = GlobalKey<FormState>();
   MorecApi client = new MorecApi();
   SharedPrefUtil prefUtil = new SharedPrefUtil();
 
-  // 提交表单登陆
+  // 提交表单注册
   Future submit(Store<AppState> store) async {
     // First validate form.
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
 
 
-      var response = await client.login(_data.username, _data.password);
+      var response = await client.register(_data.username, _data.password);
 
       if (response != null) {
         store.dispatch(Actions.login);
         prefUtil.setToken(response.data['token']);
         prefUtil.setUserName(_data.username);
-        Toast.show('登陆成功');
+        Toast.show('注册成功');
         back();
       }
-      
     }
   }
 
@@ -105,23 +102,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    final registerLabel = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text('没有账号？', style: TextStyle(color: AppColor.grey, fontSize: 14),),
-        GestureDetector(
-          onTap: () {
-            back();
-            AppNavigator.push(context, RegisterScene());
-          },
-          child: Text(
-            '点击注册',
-            style: TextStyle(color: Colors.blue, fontSize: 14),
-          ),
-        ),
-      ],
-    );
-
     return StoreConnector<AppState, Store<AppState>>(
       converter: (store) => store,
       builder: (context, store) {
@@ -130,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
           resizeToAvoidBottomPadding: false,
           appBar: AppBar(
               brightness: Brightness.light,
-              title: Text('登陆'),
+              title: Text('注册'),
               backgroundColor: AppColor.white,
               leading: GestureDetector(
                 onTap: back,
@@ -152,14 +132,12 @@ class _LoginPageState extends State<LoginPage> {
                       pressedOpacity: 0.7,
                       padding: EdgeInsets.symmetric(vertical: 10),
                       color: AppColor.darkGrey,
-                      child: Text('登陆'), 
+                      child: Text('注册'), 
                       onPressed: () {
                         submit(store);
                       },
                     ),
                   ),
-                  SizedBox(height: 10,),
-                  registerLabel
                 ],
               )
             ),
@@ -176,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 
-class _LoginData {
+class _RegisterData {
   String username = '';
   String password = '';
 }

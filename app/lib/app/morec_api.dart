@@ -9,6 +9,22 @@ class MorecApi {
 
   var dio = MorecApi.createDio();
 
+  // 用户注册
+  Future<dynamic> register(String username, String password) async{
+    var registerDio = MorecApi.createRegisterDio();
+    Response<Map> response;
+    var data = {
+      "username": username,
+      "password": password
+    };
+    try {
+      response = await registerDio.post('user/', data: data);
+    } catch (e) {
+      Toast.show('用户名存在');
+      return null;
+    }
+    return response;
+  }
 
   // 用户登陆
   Future<dynamic> login(String username, String password) async{
@@ -139,4 +155,15 @@ class MorecApi {
     );
     return Dio(options);
   }
+
+    static Dio createRegisterDio() {
+    var options = BaseOptions(
+      baseUrl: baseUrl,
+      connectTimeout: 10000,
+      receiveTimeout: 100000,
+    );
+    return Dio(options);
+  }
+
+
 }

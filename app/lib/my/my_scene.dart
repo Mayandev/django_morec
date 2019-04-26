@@ -54,10 +54,12 @@ class _MySceneState extends State<MyScene>
     List movieList = await api.getFavorMovieList();
     List actorList = await api.getFavorActorList();
 
+
+
     setState(() {
       username = name;
-      favorMovies = list2Movie(movieList);
-      favorActors = list2Actor(actorList);
+      favorMovies = list2Movie(movieList??[]);
+      favorActors = list2Actor(actorList??[]);
     });
   }
 
@@ -92,7 +94,7 @@ class _MySceneState extends State<MyScene>
       appBar: AppBar(
         title: Text('我的收藏', style: TextStyle(color: AppColor.white),),
         elevation: 0,
-        backgroundColor: AppColor.darkGrey,
+        backgroundColor: AppColor.primary,
         brightness: Brightness.dark,
       ),
       body: NestedScrollView(
@@ -101,7 +103,7 @@ class _MySceneState extends State<MyScene>
             SliverAppBar(
               brightness: Brightness.dark,
               pinned: true,
-              backgroundColor: AppColor.darkGrey,
+              backgroundColor: AppColor.primary,
               forceElevated: boxIsScrolled,
               elevation: 0,
               floating: true,
@@ -109,7 +111,7 @@ class _MySceneState extends State<MyScene>
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(
                   decoration: BoxDecoration(
-                    color: AppColor.darkGrey
+                    color: AppColor.primary
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -180,7 +182,7 @@ class FavorMovieSection extends StatelessWidget {
           children: <Widget>[
             Image.asset('images/icon_nothing.png', width: 100, height: 100,),
             SizedBox(height: 10,),
-            Text('空空如也，去首页看看吧！', style: TextStyle(color: AppColor.lightGrey, fontSize: 14),)
+            Text('空空如也，去首页看看吧！', style: TextStyle(color: AppColor.grey, fontSize: 14),)
           ],
         ),
       );
@@ -201,7 +203,7 @@ class FavorActorSection extends StatelessWidget {
           children: <Widget>[
             Image.asset('images/icon_nothing.png', width: 100, height: 100,),
             SizedBox(height: 10,),
-            Text('空空如也，去首页看看吧！', style: TextStyle(color: AppColor.darkGrey, fontSize: 14),)
+            Text('空空如也，去首页看看吧！', style: TextStyle(color: AppColor.grey, fontSize: 14),)
           ],
         ),
       );

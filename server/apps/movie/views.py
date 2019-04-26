@@ -11,7 +11,7 @@ from rest_framework.pagination import PageNumberPagination
 
 class MoviePagination(PageNumberPagination):
     '''
-    商品列表自定义分页
+    电影列表自定义分页
     '''
 
     # 默认每页显示的个数

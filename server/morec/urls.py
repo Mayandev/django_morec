@@ -18,7 +18,8 @@ from django.urls import path, include, re_path
 
 from users.views import UserViewSet
 from movie.views import MovieViewSet, GenreViewSet
-from user_operation.views import UserFavorMovieViewSet, UserFavorActorViewSet
+from user_operation.views import UserFavorMovieViewSet, UserFavorActorViewSet, UserFavorGenreViewSet
+from recommendation.views import RecommendationViewSet
 
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import SimpleRouter
@@ -32,6 +33,8 @@ router.register(r'user', UserViewSet, base_name='user')
 router.register(r'genre', GenreViewSet, base_name='genre')
 router.register(r'user_favor_movie', UserFavorMovieViewSet, base_name='user_favor_movie')
 router.register(r'user_favor_actor', UserFavorActorViewSet, base_name='user_favor_movie')
+router.register(r'user_favor_genre', UserFavorGenreViewSet, base_name='user_favor_genre')
+router.register(r'recommendation', RecommendationViewSet, base_name='recommendation')
 
 urlpatterns = [
     path('admin/', xadmin.site.urls),

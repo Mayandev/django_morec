@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'movie',
     "user_operation",
+    "recommendation",
     'rest_framework',
     'rest_framework.authtoken',
     'xadmin',

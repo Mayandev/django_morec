@@ -7,7 +7,7 @@
 # @Software: PyCharm
 
 from rest_framework import serializers
-from user_operation.models import UserFavorMovie, UserFavorActor
+from user_operation.models import UserFavorMovie, UserFavorActor, UserFavorGenre
 from rest_framework.validators import UniqueTogetherValidator
 
 
@@ -69,3 +69,14 @@ class UserFavorActorSerializer(serializers.ModelSerializer):
         ]
         model = UserFavorActor
         fields = ("user", "actorId", 'name', 'avatar')
+
+
+class UserFavorGenreSerializer(serializers.ModelSerializer):
+    # 获取当前登录的用户
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
+    class Meta:
+        model = UserFavorGenre
+        fields = ("user", "genre")

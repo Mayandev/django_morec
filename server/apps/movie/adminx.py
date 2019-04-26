@@ -12,10 +12,14 @@ from .models import Movie, Genre
 
 class MovieAdmin(object):
     list_display = ['id', 'title', 'doubanId']
+    model_icon = 'fa fa-ticket'
+
 
 
 class GenreAdmin(object):
     list_display = ['id', 'genre']
+    model_icon = 'fa fa-ticket'
+
 
 
 xadmin.site.register(Movie, MovieAdmin)

@@ -37,3 +37,15 @@ class UserFavorActor(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class UserFavorGenre(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户", unique=True)
+    genre = models.CharField("种类", max_length=100, null=False, blank=False)
+
+    class Meta:
+        verbose_name = "用户收藏电影类型"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.user.username

@@ -4,9 +4,9 @@ from django.shortcuts import render
 
 from rest_framework import viewsets
 from rest_framework import mixins
-from .models import UserFavorMovie, UserFavorActor
+from .models import UserFavorMovie, UserFavorActor, UserFavorGenre
 from .serializers import UserFavorMovieSerializer, UserFavorMovieDetailSerializer, \
-    UserFavorActorDetailSerializer, UserFavorActorSerializer
+    UserFavorActorDetailSerializer, UserFavorActorSerializer, UserFavorGenreSerializer
 from rest_framework.permissions import IsAuthenticated
 from utils.permissions import IsOwnerOrReadOnly
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -61,3 +61,15 @@ class UserFavorActorViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, 
     def get_queryset(self):
         # 只能查看当前登录用户的收藏，不会获取所有用户的收藏
         return UserFavorActor.objects.filter(user=self.request.user)
+
+
+class UserFavorGenreViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
+    # IsAuthenticated：必须登录用户；IsOwnerOrReadOnly：必须是当前登录的用户
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    # auth使用来做用户认证的
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    serializer_class = UserFavorGenreSerializer
+
+    def get_queryset(self):
+        # 只能查看当前登录用户的收藏，不会获取所有用户的收藏
+        return UserFavorGenre.objects.filter(user=self.request.user)

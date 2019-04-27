@@ -68,7 +68,7 @@ class UserFavorActorSerializer(serializers.ModelSerializer):
             )
         ]
         model = UserFavorActor
-        fields = ("user", "actorId", 'name', 'avatar')
+        fields = ("user", "actorId", 'name', 'avatar', 'works')
 
 
 class UserFavorGenreSerializer(serializers.ModelSerializer):

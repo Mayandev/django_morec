@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.contenttypes',
@@ -49,7 +50,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+
 ]
 
 MIDDLEWARE = [
@@ -155,3 +157,9 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
+
+
+CRONJOBS = [
+    # 表示每过一分钟执行一次
+    ('*/1 * * * *', 'recommendation.task.task')
+]

@@ -17,6 +17,7 @@ class Movie(models.Model):
 
 class Genre(models.Model):
     genre = models.CharField("电影类型", max_length=30, null=False, blank=False)
+    doubanIds = models.CharField("相关电影", max_length=256, null=True, blank=True)
 
     class Meta:
         verbose_name = "电影类型"

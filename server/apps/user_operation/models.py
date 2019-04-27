@@ -29,6 +29,7 @@ class UserFavorActor(models.Model):
     actorId = models.CharField("演员id", max_length=20, null=False, blank=False)
     name = models.CharField("演员姓名", max_length=100, null=False, blank=False)
     avatar = models.CharField("演员头像url", max_length=255, null=False, blank=False)
+    works = models.CharField("相关作品", max_length=255, null=True, blank=True)
 
     class Meta:
         verbose_name = "用户收藏演员"
@@ -40,7 +41,7 @@ class UserFavorActor(models.Model):
 
 
 class UserFavorGenre(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户", unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户")
     genre = models.CharField("种类", max_length=100, null=False, blank=False)
 
     class Meta:

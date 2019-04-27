@@ -39,6 +39,34 @@ class MorecApi {
     return response;
   }
 
+  // 读取当前电影类型
+  Future<dynamic> getGenreList() async{
+    Response<List> response;
+    try {
+      response = await dio.get('genre/');
+    } catch (e) {
+      Toast.show('网络异常');
+      return null;
+    }
+    return response.data;
+  }
+
+  // 用户添加电影类型
+  Future<dynamic> favorGenre(String genre) async {
+    Response<Map> response;
+    var data = {
+      'genre': genre, 
+    };
+    try {
+      response = await dio.post('user_favor_genre/', data: data);
+    } catch (e) {
+      Toast.show('网络异常');
+      return null;
+    }
+    return response.data;
+  }
+
+
   // 判断当前电影是否被收藏
   Future<dynamic> isMovieFavor(String id) async{
     Response<Map> response;
@@ -94,10 +122,18 @@ class MorecApi {
   // 收藏该演员
   Future<dynamic> favorActor(MovieActorDetail actor) async{
     Response<Map> response;
+    List<MovieActorWork> works = actor.works;
+    List worksId = [];
+    works.forEach((work) {
+      worksId.add(work.movie.id);
+    });
+    String worksString = worksId.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(', ', ',');
+
     var data = {
       "actorId": actor.id,
       "name": actor.name,
-      "avatar": actor.avatars.small
+      "avatar": actor.avatars.small,
+      "works": worksString
     };
     try {
       response = await dio.post('user_favor_actor/', data: data);

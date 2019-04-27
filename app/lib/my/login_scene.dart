@@ -8,7 +8,6 @@ import 'package:movie_recommend/public.dart';
 
 import 'register_scene.dart';
 
-
 // app登陆页面
 class LoginPage extends StatefulWidget {
   @override
@@ -33,7 +32,8 @@ class _LoginPageState extends State<LoginPage> {
 
       if (response != null) {
         store.dispatch(Actions.login);
-        prefUtil.setToken(response.data['token']);
+        jwt = response.data['token'];
+        prefUtil.setToken(jwt);
         prefUtil.setUserName(_data.username);
         Toast.show('登陆成功');
         back();

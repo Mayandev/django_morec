@@ -6,7 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:movie_recommend/public.dart';
 
-
+import 'genre_choice.dart';
 // app登陆页面
 class RegisterScene extends StatefulWidget {
   @override
@@ -31,10 +31,12 @@ class _RegisterSceneState extends State<RegisterScene> {
 
       if (response != null) {
         store.dispatch(Actions.login);
-        prefUtil.setToken(response.data['token']);
+        jwt = response.data['token'];
+        prefUtil.setToken(jwt);
         prefUtil.setUserName(_data.username);
         Toast.show('注册成功');
         back();
+        AppNavigator.push(context, GenreChoice());
       }
     }
   }

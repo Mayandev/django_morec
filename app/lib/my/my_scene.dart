@@ -94,7 +94,7 @@ class _MySceneState extends State<MyScene>
       appBar: AppBar(
         title: Text('我的收藏', style: TextStyle(color: AppColor.white),),
         elevation: 0,
-        backgroundColor: AppColor.primary,
+        backgroundColor: AppColor.darkGrey,
         brightness: Brightness.dark,
       ),
       body: NestedScrollView(
@@ -103,7 +103,7 @@ class _MySceneState extends State<MyScene>
             SliverAppBar(
               brightness: Brightness.dark,
               pinned: true,
-              backgroundColor: AppColor.primary,
+              backgroundColor: AppColor.darkGrey,
               forceElevated: boxIsScrolled,
               elevation: 0,
               floating: true,
@@ -111,7 +111,7 @@ class _MySceneState extends State<MyScene>
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(
                   decoration: BoxDecoration(
-                    color: AppColor.primary
+                    color: AppColor.darkGrey
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

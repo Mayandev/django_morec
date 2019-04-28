@@ -3,7 +3,7 @@
 # @Time    : 2019-04-27 16:00
 # @Author  : Mayandev
 # @Site    : https://github.com/Mayandev/
-# @File    : task.py
+# @File    : calculate_similary_movie.py
 # @Software: PyCharm
 
 from .models import Genre

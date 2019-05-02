@@ -1,10 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2019-04-28 20:52
+# @Time    : 2019-04-30 09:53
 # @Author  : Mayandev
 # @Site    : https://github.com/Mayandev/
-# @File    : task.py
+# @File    : generate_recommendation.py
 # @Software: PyCharm
+
+import os;
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "morec.settings")  # NoQA
+import django;
+
+django.setup()  #
+
 
 from users.models import UserProfile
 from movie.models import Genre, Movie
@@ -57,17 +65,16 @@ def recommend_movie_sim_movie(user):
                 continue
 
 
-def generate_recommendation():
 
-    # 每天6点钟清空推荐表格，生成新的推荐
-    Recommendation.objects.all().delete()
+# 每天6点钟清空推荐表格，生成新的推荐
+Recommendation.objects.all().delete()
 
-    users = UserProfile.objects.filter(is_staff=0, is_superuser=0)
+users = UserProfile.objects.filter(is_staff=0, is_superuser=0)
 
-    for user in users:
-        recommend_genre_sim_movie(user)
-        recommend_actor_sim_movie(user)
-        recommend_movie_sim_movie(user)
+for user in users:
+    recommend_genre_sim_movie(user)
+    recommend_actor_sim_movie(user)
+    recommend_movie_sim_movie(user)
 
 
 

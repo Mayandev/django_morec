@@ -40,3 +40,4 @@ class RecommendationViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         # 只能查看当前登录用户的推荐
         return Recommendation.objects.filter(user=self.request.user).order_by('random_rank')
 
+

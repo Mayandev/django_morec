@@ -11,7 +11,7 @@ from .models import Movie, Genre
 
 
 class MovieAdmin(object):
-    list_display = ['id', 'title', 'doubanId']
+    list_display = ['id', 'closest_movie', 'doubanId']
     model_icon = 'fa fa-ticket'
 
 

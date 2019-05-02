@@ -29,7 +29,7 @@ $ python manage.py runserver
 $ flutter run
 ```
 
-如果你对服务器端不感兴趣，我单独创了一个 Repo，App 可以独立于服务器运行，你可以[点击链接](https://github.com/Mayandev/morec)访问这个项目。
+如果你对服务器端不感兴趣，这里单独创建了一个 Repo，App 可以独立于服务器运行，你可以[点击链接](https://github.com/Mayandev/morec)访问这个项目。
 
 
 ## Frontend
@@ -60,6 +60,7 @@ $ flutter run
 服务器使用 Django + restframework 框架搭建，数据库使用 MySQL，配置 xadmin 生成管理系统后台，并使用 crontab 生成系统定时任务进行定时推荐。
 
 使用到的插件：
+
 |                            插件                            |                用途                 |
 | :--------------------------------------------------------: | :---------------------------------: |
 |  [restframework](https://www.django-rest-framework.org/)   | restful 风格 API，自动生成 API 文档 |

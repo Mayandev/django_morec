@@ -11,7 +11,7 @@ class MovieCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppNavigator.pushMovieDetail(context, movie);
+        AppNavigator.pushMovieDetail(context, movie.id);
       },
       child: Container(
         padding: EdgeInsets.all(15),

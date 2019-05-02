@@ -3,20 +3,16 @@ import 'dart:async';
 
 import 'package:movie_recommend/public.dart';
 
-
 class MorecApi {
   static const String baseUrl = 'http://127.0.0.1:8000/';
 
   var dio = MorecApi.createDio();
 
   // 用户注册
-  Future<dynamic> register(String username, String password) async{
+  Future<dynamic> register(String username, String password) async {
     var registerDio = MorecApi.createRegisterDio();
     Response<Map> response;
-    var data = {
-      "username": username,
-      "password": password
-    };
+    var data = {"username": username, "password": password};
     try {
       response = await registerDio.post('user/', data: data);
     } catch (e) {
@@ -27,10 +23,11 @@ class MorecApi {
   }
 
   // 用户登陆
-  Future<dynamic> login(String username, String password) async{
+  Future<dynamic> login(String username, String password) async {
     Response<Map> response;
     try {
-      response = await dio.post('login/', data: {'username': username, 'password': password});
+      response = await dio
+          .post('login/', data: {'username': username, 'password': password});
     } catch (e) {
       print('账号密码错误');
       Toast.show('账号或密码错误');
@@ -40,7 +37,7 @@ class MorecApi {
   }
 
   // 读取当前电影类型
-  Future<dynamic> getGenreList() async{
+  Future<dynamic> getGenreList() async {
     Response<List> response;
     try {
       response = await dio.get('genre/');
@@ -55,7 +52,7 @@ class MorecApi {
   Future<dynamic> favorGenre(String genre) async {
     Response<Map> response;
     var data = {
-      'genre': genre, 
+      'genre': genre,
     };
     try {
       response = await dio.post('user_favor_genre/', data: data);
@@ -66,9 +63,8 @@ class MorecApi {
     return response.data;
   }
 
-
   // 判断当前电影是否被收藏
-  Future<dynamic> isMovieFavor(String id) async{
+  Future<dynamic> isMovieFavor(String id) async {
     Response<Map> response;
     try {
       response = await dio.get('user_favor_movie/$id/');
@@ -80,7 +76,7 @@ class MorecApi {
   }
 
   // 判断当前演员是否被收藏
-  Future<dynamic> isActorFavor(String id) async{
+  Future<dynamic> isActorFavor(String id) async {
     Response<Map> response;
     try {
       response = await dio.get('user_favor_actor/$id/');
@@ -91,10 +87,10 @@ class MorecApi {
   }
 
   // 收藏该电影
-  Future<dynamic> favorMovie(MovieDetail movie) async{
+  Future<dynamic> favorMovie(MovieDetail movie) async {
     Response<Map> response;
     var data = {
-      'doubanId': movie.id, 
+      'doubanId': movie.id,
       'title': movie.title,
       'poster': movie.images.small
     };
@@ -108,7 +104,7 @@ class MorecApi {
   }
 
   // 取消收藏该电影
-    Future<dynamic> cancelFavorMovie(String id) async{
+  Future<dynamic> cancelFavorMovie(String id) async {
     Response<Map> response;
     try {
       response = await dio.delete('user_favor_movie/$id/');
@@ -120,14 +116,18 @@ class MorecApi {
   }
 
   // 收藏该演员
-  Future<dynamic> favorActor(MovieActorDetail actor) async{
+  Future<dynamic> favorActor(MovieActorDetail actor) async {
     Response<Map> response;
     List<MovieActorWork> works = actor.works;
     List worksId = [];
     works.forEach((work) {
       worksId.add(work.movie.id);
     });
-    String worksString = worksId.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(', ', ',');
+    String worksString = worksId
+        .toString()
+        .replaceAll('[', '')
+        .replaceAll(']', '')
+        .replaceAll(', ', ',');
 
     var data = {
       "actorId": actor.id,
@@ -145,7 +145,7 @@ class MorecApi {
   }
 
   // 取消收藏该演员
-  Future<dynamic> cancelFavorActor(String id) async{
+  Future<dynamic> cancelFavorActor(String id) async {
     Response<Map> response;
     try {
       response = await dio.delete('user_favor_actor/$id/');
@@ -157,7 +157,7 @@ class MorecApi {
   }
 
   // 查询用户的收藏的演员
-  Future<dynamic> getFavorActorList() async{
+  Future<dynamic> getFavorActorList() async {
     Response<List> response;
     try {
       response = await dio.get('user_favor_actor/');
@@ -169,7 +169,7 @@ class MorecApi {
   }
 
   // 查询用户的收藏电影
-  Future<dynamic> getFavorMovieList() async{
+  Future<dynamic> getFavorMovieList() async {
     Response<List> response;
     try {
       response = await dio.get('user_favor_movie/');
@@ -180,19 +180,28 @@ class MorecApi {
     return response.data;
   }
 
+  // 返回推荐
+  Future<dynamic> getRecommendation(int page, int pageSize) async {
+    Response<Map> response;
+    try {
+      response = await dio.get('recommendation/', queryParameters: {'page': page, 'page_size': pageSize});
+    } catch (e) {
+      Toast.show('网络异常');
+      return null;
+    }
+    return response.data['results'];
+  }
+
   static Dio createDio() {
     var options = BaseOptions(
-      baseUrl: baseUrl,
-      connectTimeout: 10000,
-      receiveTimeout: 100000,
-      headers: {
-        'Authorization': 'JWT ' + jwt
-      }
-    );
+        baseUrl: baseUrl,
+        connectTimeout: 10000,
+        receiveTimeout: 100000,
+        headers: {'Authorization': 'JWT ' + jwt});
     return Dio(options);
   }
 
-    static Dio createRegisterDio() {
+  static Dio createRegisterDio() {
     var options = BaseOptions(
       baseUrl: baseUrl,
       connectTimeout: 10000,
@@ -200,6 +209,4 @@ class MorecApi {
     );
     return Dio(options);
   }
-
-
 }

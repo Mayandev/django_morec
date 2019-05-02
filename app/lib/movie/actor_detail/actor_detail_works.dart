@@ -52,7 +52,7 @@ class ActorDetailWorks extends StatelessWidget {
     }
     return  GestureDetector(
       onTap: () {
-        AppNavigator.pushMovieDetail(context, work.movie);
+        AppNavigator.pushMovieDetail(context, work.movie.id);
       },
       child: Container(
         margin: EdgeInsets.only(left: 15,right: paddingRight),

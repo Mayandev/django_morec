@@ -16,7 +16,7 @@ class HomeMovieCoverView extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        AppNavigator.pushMovieDetail(context, movie);
+        AppNavigator.pushMovieDetail(context, movie.id);
       },
       child: Container(
         width: width,

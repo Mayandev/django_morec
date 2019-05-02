@@ -37,6 +37,7 @@ export 'package:movie_recommend/model/movie_photo.dart';
 export 'package:movie_recommend/model/movie_comment.dart';
 export 'package:movie_recommend/model/movie_actor_detail.dart';
 export 'package:movie_recommend/model/movie_actor_work.dart';
+export 'package:movie_recommend/model/movie_recommendation.dart';
 
 // widget
 export 'package:movie_recommend/widget/movie_cover_image.dart';

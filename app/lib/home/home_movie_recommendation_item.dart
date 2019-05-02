@@ -3,62 +3,33 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:movie_recommend/public.dart';
 
-class MovieListItem extends StatelessWidget {
-  final MovieItem movie;
-  final String actionStr;
+class MovieRecommendationItemView extends StatefulWidget {
+  final String doubanId;
+  final String description;
 
-  const MovieListItem(this.movie, this.actionStr);
+  const MovieRecommendationItemView({Key key, this.doubanId, this.description}) : super(key: key);
+  @override
+  _MovieRecommendationItemViewState createState() => _MovieRecommendationItemViewState();
+}
 
-  Widget _getActionWidget(BuildContext context) {
-    Widget action;
+class _MovieRecommendationItemViewState extends State<MovieRecommendationItemView> {
+  
+  MovieDetail movie;
 
-    String pubdate = movie.mainlandPubdate;
-    if (pubdate != '') {
-      pubdate = movie.mainlandPubdate.split('-')[1] +
-          '月\n' +
-          movie.mainlandPubdate.split('-')[2] +
-          '日';
-    } else {
-      pubdate = '待定';
-    }
-    switch (actionStr) {
-      case 'coming_soon':
-        action = Container(
-          padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.red, width: 0.5),
-              borderRadius: BorderRadius.circular(2.0)),
-          child: Text(
-            pubdate,
-            style: TextStyle(color: Colors.red, fontSize: 12.0),
-          ),
-        );
-        break;
-      default:
-        action = Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.favorite_border),
-              color: Color(0xFFF7AC3A),
-              onPressed: () {},
-            ),
-            Text('收藏', style: TextStyle(color: Color(0xFFF7AC3A)))
-          ],
-        );
-        break;
-    }
-    return action;
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
   }
-
+  
   @override
   Widget build(BuildContext context) {
     double imgWidth = 100;
     double height = imgWidth / 0.7;
     double spaceWidth = 15;
-    double actionWidth = 60;
-    Widget action = _getActionWidget(context);
-
+    if (movie == null) {
+      return Container();
+    }
     return GestureDetector(
       onTap: () {
         AppNavigator.pushMovieDetail(context, movie.id);
@@ -70,6 +41,7 @@ class MovieListItem extends StatelessWidget {
                 bottom: BorderSide(color: AppColor.lightGrey, width: 0.5)),
             color: AppColor.white),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             MovieCoverImage(
               movie.images.small,
@@ -78,8 +50,7 @@ class MovieListItem extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.fromLTRB(spaceWidth, 0, spaceWidth, 0),
-              height: height,
-              width: Screen.width - imgWidth - spaceWidth * 2 - actionWidth,
+              width: Screen.width - imgWidth - spaceWidth * 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -120,20 +91,24 @@ class MovieListItem extends StatelessWidget {
                     style: TextStyle(color: AppColor.grey, fontSize: 14),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                  )
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    width: Screen.width - imgWidth - spaceWidth * 4,
+                    color: Color(0xfff2f2f2),
+                    child: Text(this.widget.description, style: TextStyle(color: AppColor.grey, fontSize: 14))
+                  ),
                 ],
               ),
-            ),
-            Container(
-              width: actionWidth,
-              height: height,
-              child: Center(child: action),
             ),
           ],
         ),
       ),
     );
   }
+
+
 
   String actor2String(List<MovieActor> actors) {
     StringBuffer sb = new StringBuffer();
@@ -149,5 +124,17 @@ class MovieListItem extends StatelessWidget {
       sb.write(' $genre ');
     });
     return sb.toString();
+  }
+
+
+  Future<void> fetchData() async{
+    ApiClient client = new ApiClient();
+    MovieDetail data =
+        MovieDetail.fromJson(await client.getMovieDetail(this.widget.doubanId));
+
+    setState(() {
+      movie = data;
+    });
+    
   }
 }

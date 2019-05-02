@@ -160,6 +160,6 @@ JWT_AUTH = {
 
 
 CRONJOBS = [
-    # 表示每过一分钟执行一次
-    ('*/1 * * * *', 'recommendation.task.task')
+    # 每天早上 6 点执行
+    ('* 6 * * *', 'recommendation.task.generate_recommendation')
 ]

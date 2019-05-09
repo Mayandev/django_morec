@@ -8,7 +8,7 @@
 
 整个系统实现了用户登录注册、查看最新电影列表、电影 top 榜单、电影详情、推荐列表和其推荐解释等功能，强化用户对推荐系统的依赖度和信任度，达到设计本系统的目的。
 
-**关键词：**推荐系统，推荐解释，Flutter 框架，定时任务
+**关键词**: 推荐系统，推荐解释，Flutter 框架，定时任务
 
 ## Abstract
 
@@ -18,7 +18,7 @@ In this paper, the writer implement an explainable movie recommendation system, 
 
 The whole system implement the functions of user login and registration, viewing the latest movie list, movie top list, movie details, recommendation list and its recommendation explanation. The system strengthen the user's dependence and trust on the recommendation system, which achieve the purpose of designing this system.
 
-**Keywords: **Recommendation System, Explainable Recommendation, Flutter Framework, Scheduled Task
+**Keywords**: Recommendation System, Explainable Recommendation, Flutter Framework, Scheduled Task
 
 
 
@@ -170,9 +170,6 @@ RESTful 的优点有：URL 具有很强可读性的，具有自描述性；资�
 
 
 
-
-
-
 ### 2.5 框架分析
 
 本部分主要针对系统用到的框架进行分析并讲解其特点。
@@ -190,9 +187,11 @@ Flutter 是 Google 推出并开源的移动应用开发框架，主打跨平台�
 （3）Flutter 核心模块分析
 
 ① Flutter Framework
+
 这是一个纯 Dart 实现的 SDK，底层是 UI 库，提供动画、手势及绘制能力。Rendering 层构建和更新 UI 树，将 UI 绘制到屏幕。Widgets 层是 Flutter 提供一套基础组件库，含有 Material 和 Cupertino 两种风格的组件。
 
 ② Flutter Engine
+
 这是一个纯 C++ 实现的 SDK，其中包括了 Skia 引擎、Dart 运行时、文字排版引擎等。在代码调用 UI 库时，调用最终会走到 Engine 层，然后实现真正的绘制逻辑。
 
 #### 2.5.2 Django
@@ -208,15 +207,19 @@ Django 是一个高级的 Python 网络框架，拥有完善的模板机制、�
 （3）Django 模块分析
 
 ① URLs 模块
+
 URL 映射器用于根据请求 URL 将 HTTP 请求重定向到相应的视图。URL 映射器还可以匹配出现在 URL 中的字符串或数字的特定模式，并将其作为数据传递给视图。
 
 ② View 模块
+
 视图是一个请求处理函数，它接收 HTTP 请求并返回 HTTP 响应。视图通过模型访问满足请求所需的数据，并将响应的格式委托给模板。
 
 ③ Models 模块
+
 模型是定义应用程序数据结构的 Python 对象，并提供在数据库中管理（添加，修改，删除）和查询记录的机制。
 
 ④ Template 模块
+
 模板 是定义文件（例如 HTML 页面）的结构或布局的文本文件，用于表示实际内容的占位符。一个视图可以使用 HTML 模板，从数据填充它动态地创建一个 HTML 页面模型。
 
 
@@ -230,7 +233,7 @@ URL 映射器用于根据请求 URL 将 HTTP 请求重定向到相应的视图�
 
 
 
-[^1]: 王春才,邢晖,李英韬.推荐系统的推荐解释研究[J].现代计算机(专业版),2016(02):41-43+80.
+[^1]: 王春才, 邢晖, 李英韬.推荐系统的推荐解释研究[J].现代计算机(专业版),2016(02):41-43+80.
 
 [^2]: 个性化推荐系统综述 王国霞，刘贺平
 

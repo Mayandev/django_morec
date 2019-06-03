@@ -67,6 +67,8 @@ $ flutter run
 |        [xadmin](https://github.com/sshwsfc/xadmin)         |      生成更高级的后台管理系统       |
 | [django_crontab](https://pypi.org/project/django-crontab/) |  django 定时任务，用于定时生成推荐  |
 
+插件详细版本请查看[requirement.txt](https://github.com/Mayandev/django_morec/blob/master/server/requirements.txt)
+
 ### server 截图
 
 **后台管理系统：**

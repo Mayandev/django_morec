@@ -83,7 +83,7 @@ $ flutter run
 
 ## End
 
-这个项目是我的本科毕业设计，具体实现细节届时可以参考我的[毕业论文](https://github.com/Mayandev/django_morec/blob/master/PAPER.md)。如果你喜欢这个项目，欢迎给我一个 star，也算是对我的一份鼓励与认可。
+这个项目是我的本科毕业设计，如果你喜欢这个项目，欢迎给我一个 star，也算是对我的一份鼓励与认可。
 
 欢迎在 [Github 主页](https://github.com/Mayandev)关注我的其他项目。
 

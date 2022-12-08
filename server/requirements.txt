@@ -1,6 +1,6 @@
 asn1crypto==0.24.0
 backports.csv==1.0.7
-certifi==2019.3.9
+certifi==2022.12.7
 cffi==1.12.3
 chardet==3.0.4
 coreapi==2.3.3
